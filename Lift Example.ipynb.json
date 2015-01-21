@@ -1,0 +1,321 @@
+{
+ "metadata": {
+  "name": "",
+  "signature": "sha256:9705676a3b06ccd090c580cee5c342640742938ac0ff069b0395756de515638d"
+ },
+ "nbformat": 3,
+ "nbformat_minor": 0,
+ "worksheets": [
+  {
+   "cells": [
+    {
+     "cell_type": "heading",
+     "level": 2,
+     "metadata": {},
+     "source": [
+      "Examples using the lift equation"
+     ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "Brian R Taylor"
+     ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "<img src=\"https://farm4.staticflickr.com/3824/9615082251_72a747c4f3_n.jpg\" width=\"320\" height=\"213\" alt=\"DSC_5802\">\n",
+      "\n",
+      "One of the [UAV Laboratories](http://www.uav.aem.umn.edu/) aircraft, named Thor, has the following characteristics:\n",
+      "   * Wing area: 3.36 $ft^2$\n",
+      "   * Weight 5.2 lbs\n",
+      "   * Symmetric airfoil with a lift curve slope of 0.1097 per degree\n",
+      "   * Drag coefficient: 0.04\n",
+      "\n",
+      "**a) How much lift is needed for Thor to maintain level flight?**"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "\"Weight, lbs\"\n",
+      "W = 5.2;\n",
+      "\"In steady level flight, the amount of lift needed is equal to the weight\"\n",
+      "L = W;\n",
+      "print \"Thor needs %f lbs of lift to maintain level flight\" % L"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "Thor needs 5.200000 lbs of lift to maintain level flight\n"
+       ]
+      }
+     ],
+     "prompt_number": 10
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "**b) If Thor is flying at Anoka County RC Field (elevation 1,000 ft above sea level, air density 2.3081E-3 $slug/ft^3$) and a speed of 56 ft/s, what is Thor's angle of attack?**"
+     ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "We can recall that the equation for lift is:\n",
+      "\n",
+      "$$L = W = 1/2(\\rho)V^2SC_L$$\n",
+      "\n",
+      "$$C_L = C_{L0} + C_{L\\alpha} (\\alpha)$$\n",
+      "\n",
+      "Because the airfoil is symmetric, $C_{L0} = 0$\n",
+      "\n",
+      "So:\n",
+      "\n",
+      "$$\\alpha = \\dfrac{2W}{\\rho V^2SC_{L\\alpha}}$$"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "\"Air density, slug/ft^3\"\n",
+      "ro = 2.3081*10**(-3);\n",
+      "\"Velocity, ft/s\"\n",
+      "V = 56;\n",
+      "\"Wing area, ft^2\"\n",
+      "S = 3.36;\n",
+      "\"Lift curve slope, per degree\"\n",
+      "CLa = 0.1097;\n",
+      "\"Solving for alpha, degrees\"\n",
+      "a = (2*W)/(ro*(V**2)*S*CLa);\n",
+      "print \"Angle of attack is %f degrees\" % a"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "Angle of attack is 3.898134 degrees\n"
+       ]
+      }
+     ],
+     "prompt_number": 29
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "**c) For the problem in part B, what is Thor's drag?**"
+     ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "We can recall that the equation for drag is:\n",
+      "\n",
+      "$$ D = 1/2(\\rho)V^2SC_D$$"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "\"Drag coefficient\"\n",
+      "CD = 0.04;\n",
+      "\"Solving for drag, lbs\"\n",
+      "D = (.5)*ro*(V**2)*S*CD;\n",
+      "print \"Drag is %f lbs\" % D"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "Drag is 0.486407 lbs\n"
+       ]
+      }
+     ],
+     "prompt_number": 32
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "**d) For the problem in part C, what is Thor's thrust?**"
+     ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "We can recall that thrust is equal to drag in steady level flight."
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "\"Solving for thrust, lbs\"\n",
+      "T = D;\n",
+      "print \"Thrust is %f lbs\" % T"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "Thrust is 0.486407 lbs\n"
+       ]
+      }
+     ],
+     "prompt_number": 33
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "**e) Assume Thor's maximum angle of attack is 10 degrees, at what speed will Thor stall?**"
+     ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "Start with the lift equation again:\n",
+      "\n",
+      "$$L = W = 1/2(\\rho)V^2SC_L$$\n",
+      "\n",
+      "And solve for velocity:\n",
+      "\n",
+      "$$V = \\sqrt{\\dfrac{2W}{\\rho SC_L}}$$\n",
+      "\n",
+      "$$C_L = C_{L0} + C_{L\\alpha} (\\alpha)$$\n",
+      "\n",
+      "Because the airfoil is symmetric, $C_{L0} = 0$\n",
+      "\n",
+      "So:\n",
+      "\n",
+      "$$V = \\sqrt{\\dfrac{2W}{\\rho SC_{L\\alpha}(\\alpha)}}$$"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "\"Angle of attack, degrees\"\n",
+      "a = 10;\n",
+      "\"Solving for velocity, fps\"\n",
+      "V = sqrt((2*W)/(ro*S*CLa*a));\n",
+      "print \"Stall speed is %f feet per second\" % V"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "Stall speed is 34.963621 feet per second\n"
+       ]
+      }
+     ],
+     "prompt_number": 34
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "**f) What is the coefficient of lift in part E?**"
+     ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "$$C_L = C_{L0} + C_{L\\alpha} (\\alpha)$$"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "\"Solving for lift coefficient, ND\"\n",
+      "CL = CLa*a;\n",
+      "print \"Lift coefficient is %f\" % CL"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "Lift coefficient is 1.097000\n"
+       ]
+      }
+     ],
+     "prompt_number": 35
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "**g) If Thor's wing area remains unchanged with the deployment of flaps and Thor is landing at Anoka County RC Field (elevation 1,000 ft above sea level, air density 2.3081E-3 $slug/ft^3$) with a stall speed of 30 ft/s, what is Thor's lift coefficient?**"
+     ]
+    },
+    {
+     "cell_type": "markdown",
+     "metadata": {},
+     "source": [
+      "$$L = W = 1/2(\\rho)V^2SC_L$$\n",
+      "\n",
+      "$$C_L = \\dfrac{2W}{\\rho V^2 S}$$"
+     ]
+    },
+    {
+     "cell_type": "code",
+     "collapsed": false,
+     "input": [
+      "\"Velocity, ft/s\"\n",
+      "V = 30;\n",
+      "\n",
+      "\"Solving for lift coefficient, ND\"\n",
+      "CL = (2*W)/(ro*V**2*S)\n",
+      "print \"Lift coefficient is %f\" % CL"
+     ],
+     "language": "python",
+     "metadata": {},
+     "outputs": [
+      {
+       "output_type": "stream",
+       "stream": "stdout",
+       "text": [
+        "Lift coefficient is 1.490037\n"
+       ]
+      }
+     ],
+     "prompt_number": 36
+    }
+   ],
+   "metadata": {}
+  }
+ ]
+}
